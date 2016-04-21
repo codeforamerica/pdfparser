@@ -60,7 +60,7 @@ public class PdfParser {
     	}
     }
     
-	private static String readPdfFields(String srcFile) {
+	private static String readPdfFields(String srcFile) throws IOException {
 		PdfToJsonConverter converter = new PdfToJsonConverter(new LocalPdfReader(srcFile));
 		return converter.getFields();
 	}
@@ -86,7 +86,7 @@ public class PdfParser {
 		return args;
     }
 
-	private static void testLocally() {
+	private static void testLocally() throws IOException {
 		PdfToJsonConverter converter = new PdfToJsonConverter(new LocalPdfReader(SRC));
         String json = converter.getFields();
         System.out.print(json);
