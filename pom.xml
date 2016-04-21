@@ -1,0 +1,97 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.codeforamerica.pdfhook</groupId>
+    <artifactId>pdfparser</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>PDFParser</name>
+    <packaging>jar</packaging>
+
+    <scm>
+        <connection>scm:git:git@github.com:codeforamerica/pdfhook.git</connection>
+        <developerConnection>scm:git:git@github.com:codeforamerica/pdfhook.git</developerConnection>
+        <url>https://github.com/codeforamerica/pdfhook.git</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <dependencies>
+        <!-- IText dependencies -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>${itext-pdf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itext-pdfa</artifactId>
+            <version>${itext-pdf.version}</version>
+        </dependency>
+
+        <!-- Jackson dependencies -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>${jdkLevel}</source>
+                    <target>${jdkLevel}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <!--
+                    This builds the "pdfparser-...-jar-with-dependencies.jar" package, which includes
+                    both the PDFParser code and all of the third-party dependencies in one.  To refer
+                    to this jar in another Maven project, use:
+                        <dependency>
+                            <groupId></groupId>
+                            <artifactId></artifactId>
+                            <version>(the current PDFParser version)</version>
+                            <classifier>dependencies</classifier>
+                        </dependency>
+                -->
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <!-- The main class that will be run if you use "java -jar ..." -->
+                            <mainClass>PdfParser</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
+    <properties>
+        <jdkLevel>1.7</jdkLevel>
+        <source.encoding>UTF-8</source.encoding>
+        <project.build.sourceEncoding>${source.encoding}</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${source.encoding}</project.reporting.outputEncoding>
+
+        <itext-pdf.version>5.5.9</itext-pdf.version>
+        <jackson.version>1.7.3</jackson.version>
+    </properties>
+</project>
