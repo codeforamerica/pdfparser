@@ -20,53 +20,53 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class PdfToJsonConverterTest {
-	
-	@Test
-	public void checkboxPdfHasExpectedFields() throws Exception {
-		assertThat(getFieldsFromPdf("checkbox.pdf"),
-    		contains(
-    			allOf(
-    				hasJsonProperty("name", equalTo("Check Box2")),
-    				hasJsonProperty("value", equalTo("")),
-    				hasJsonProperty("type", equalTo("checkbox")),
-    				hasJsonProperty("tabIndex", equalTo(0)),
-    				hasJsonProperty("required", equalTo(false)),
-    				hasJsonProperty("altText", equalTo(""))
-    			),
-    			allOf(
-    				hasJsonProperty("name", equalTo("Check Box3")),
-    				hasJsonProperty("value", equalTo("")),
-    				hasJsonProperty("type", equalTo("checkbox")),
-    				hasJsonProperty("tabIndex", equalTo(1)),
-    				hasJsonProperty("required", equalTo(false)),
-    				hasJsonProperty("altText", equalTo(""))
-    			)
-    		)
-    	);
-	}
+    
+    @Test
+    public void checkboxPdfHasExpectedFields() throws Exception {
+        assertThat(getFieldsFromPdf("checkbox.pdf"),
+            contains(
+                allOf(
+                    hasJsonProperty("name", equalTo("Check Box2")),
+                    hasJsonProperty("value", equalTo("")),
+                    hasJsonProperty("type", equalTo("checkbox")),
+                    hasJsonProperty("tabIndex", equalTo(0)),
+                    hasJsonProperty("required", equalTo(false)),
+                    hasJsonProperty("altText", equalTo(""))
+                ),
+                allOf(
+                    hasJsonProperty("name", equalTo("Check Box3")),
+                    hasJsonProperty("value", equalTo("")),
+                    hasJsonProperty("type", equalTo("checkbox")),
+                    hasJsonProperty("tabIndex", equalTo(1)),
+                    hasJsonProperty("required", equalTo(false)),
+                    hasJsonProperty("altText", equalTo(""))
+                )
+            )
+        );
+    }
 
     @Test
     public void textPdfHasExpectedFields() throws Exception {
-    	assertThat(getFieldsFromPdf("text.pdf"),
-    		contains(
-    			allOf(
-    				hasJsonProperty("name", equalTo("single")),
-    				hasJsonProperty("value", equalTo("")),
-    				hasJsonProperty("type", equalTo("text")),
-    				hasJsonProperty("tabIndex", equalTo(0)),
-    				hasJsonProperty("required", equalTo(false)),
-    				hasJsonProperty("altText", equalTo(""))
-    			),
-    			allOf(
-    				hasJsonProperty("name", equalTo("multiline")),
-    				hasJsonProperty("value", equalTo("")),
-    				hasJsonProperty("type", equalTo("text")),
-    				hasJsonProperty("tabIndex", equalTo(1)),
-    				hasJsonProperty("required", equalTo(false)),
-    				hasJsonProperty("altText", equalTo(""))
-    			)
-    		)
-    	);
+        assertThat(getFieldsFromPdf("text.pdf"),
+            contains(
+                allOf(
+                    hasJsonProperty("name", equalTo("single")),
+                    hasJsonProperty("value", equalTo("")),
+                    hasJsonProperty("type", equalTo("text")),
+                    hasJsonProperty("tabIndex", equalTo(0)),
+                    hasJsonProperty("required", equalTo(false)),
+                    hasJsonProperty("altText", equalTo(""))
+                ),
+                allOf(
+                    hasJsonProperty("name", equalTo("multiline")),
+                    hasJsonProperty("value", equalTo("")),
+                    hasJsonProperty("type", equalTo("text")),
+                    hasJsonProperty("tabIndex", equalTo(1)),
+                    hasJsonProperty("required", equalTo(false)),
+                    hasJsonProperty("altText", equalTo(""))
+                )
+            )
+        );
     }
 
     /**
@@ -74,35 +74,35 @@ public class PdfToJsonConverterTest {
      * node has a value that passes the specified test.
      */
     private Matcher<JsonNode> hasJsonProperty(final String name, final Matcher<?> test) {
-    	return new TypeSafeDiagnosingMatcher<JsonNode>() {
-    		@Override
-    		protected boolean matchesSafely(JsonNode item, Description mismatchDescription) {
-    			JsonNode field = item.get(name);
-    			Object value;
-    			if (field.isBoolean()) {
-    				value = field.getValueAsBoolean();
-    			} else if (field.isInt()) {
-    				value = field.getValueAsInt();
-    			} else if (field.isDouble()) {
-    				value = field.getValueAsDouble();
-    			} else {
-    				value = field.getValueAsText();
-    			}
-    			if (test.matches(value)) {
-    				return true;
-    			} else {
-    				mismatchDescription.appendText("field \"" + name + "\": ");
-    				test.describeMismatch(value, mismatchDescription);
-    				return false;
-    			}
-    		}
+        return new TypeSafeDiagnosingMatcher<JsonNode>() {
+            @Override
+            protected boolean matchesSafely(JsonNode item, Description mismatchDescription) {
+                JsonNode field = item.get(name);
+                Object value;
+                if (field.isBoolean()) {
+                    value = field.getValueAsBoolean();
+                } else if (field.isInt()) {
+                    value = field.getValueAsInt();
+                } else if (field.isDouble()) {
+                    value = field.getValueAsDouble();
+                } else {
+                    value = field.getValueAsText();
+                }
+                if (test.matches(value)) {
+                    return true;
+                } else {
+                    mismatchDescription.appendText("field \"" + name + "\": ");
+                    test.describeMismatch(value, mismatchDescription);
+                    return false;
+                }
+            }
 
-    		@Override
-    		public void describeTo(Description d) {
-    			d.appendText("field \"" + name + "\": ");
-    			test.describeTo(d);
-    		}
-    	};
+            @Override
+            public void describeTo(Description d) {
+                d.appendText("field \"" + name + "\": ");
+                test.describeTo(d);
+            }
+        };
     }
 
     /**
@@ -111,11 +111,11 @@ public class PdfToJsonConverterTest {
      * its "fields" property.
      */
     private ArrayNode getFieldsFromPdf(String fileName) throws IOException {
-    	InputStream stream = getClass().getClassLoader().getResourceAsStream(fileName);
-    	PdfToJsonConverter converter = new PdfToJsonConverter(new LocalPdfReader(stream));
-		String json = converter.getFields();
-		JsonParser parser = new MappingJsonFactory().createJsonParser(json);
-		JsonNode o = parser.readValueAsTree();
-		return (ArrayNode) o.get("fields");
+        InputStream stream = getClass().getClassLoader().getResourceAsStream(fileName);
+        PdfToJsonConverter converter = new PdfToJsonConverter(new LocalPdfReader(stream));
+        String json = converter.getFields();
+        JsonParser parser = new MappingJsonFactory().createJsonParser(json);
+        JsonNode o = parser.readValueAsTree();
+        return (ArrayNode) o.get("fields");
     }
 }
