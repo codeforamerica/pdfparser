@@ -1,15 +1,12 @@
-package main.java;
 
 import java.io.IOException;
 
-import main.java.pdfParsers.JsonToPdfWriter;
-import main.java.pdfParsers.PdfToJsonConverter;
-import main.java.loaders.LocalPdfReader;
-import main.java.loaders.LocalPdfWriter;
-
 import com.itextpdf.text.DocumentException;
 
-//import data.JsonWithData;
+import loaders.LocalPdfReader;
+import loaders.LocalPdfWriter;
+import converters.JsonToPdfConverter;
+import converters.PdfToJsonConverter;
 
 /**
  * 
@@ -36,20 +33,7 @@ import com.itextpdf.text.DocumentException;
  */
 
 public class PdfParser {
-    private static final String SRC = "testpdfs/formwithunicode.pdf";
-    private static final String DEST = "testpdf/text.pdf";
-	//public static final String SRC = "testpdfs/feafpart1.pdf";
-    //private static final String SRC = "testpdfs/long_example_form_with_signature.pdf";
-    //private static final String FONT = "/Library/Fonts/Arial Unicode.ttf";
-    private static final boolean debug = false;
-
-
     public static void main(String[] args) throws DocumentException, IOException {
-    	if (debug) {
-    		//testLocally();
-    		args = testWriteText();
-    	}
-    	
     	if (args.length == 2 && args[0].equals("get_fields") && args[1].length() > 0) {
     		String json = readPdfFields(args[1]);
     		System.out.print(json);
@@ -75,35 +59,11 @@ public class PdfParser {
     
 	private static String readPdfFields(String srcFile) {
 		PdfToJsonConverter converter = new PdfToJsonConverter(new LocalPdfReader(srcFile));
-		return converter.getFields();
+		return converter.convert();
 	}
 
 	private static void writeJsonToPdf(String src, String dest, String json) {
-		JsonToPdfWriter pdfWriter = new JsonToPdfWriter(new LocalPdfWriter(src, dest), json);
-		pdfWriter.writeFields();
+		JsonToPdfConverter pdfWriter = new JsonToPdfConverter(new LocalPdfWriter(src, dest), json);
+		pdfWriter.convert();
 	}
- 
-    private static String[] testWriteUnicode() {
-    	String[] args = new String[3];
-    	args[0] = "set_fields";
-		args[1] = "testpdfs/unicode text.pdf";
-		//args[2] = new JsonWithData().getFileString("unicode text.pdf");
-		return args;
-    }
-    
-    private static String[] testWriteText() {
-    	String[] args = new String[3];
-    	args[0] = "set_fields";
-		args[1] = "testpdfs/text.pdf";
-		//args[2] = new JsonWithData().getFileString("text.pdf");
-		return args;
-    }
-
-	private static void testLocally() {
-		PdfToJsonConverter converter = new PdfToJsonConverter(new LocalPdfReader(SRC));
-        String json = converter.getFields();
-        System.out.print(json);
-		JsonToPdfWriter pdfWriter = new JsonToPdfWriter(new LocalPdfWriter(SRC, DEST), json);
-        pdfWriter.writeFields();
-	}    
 }

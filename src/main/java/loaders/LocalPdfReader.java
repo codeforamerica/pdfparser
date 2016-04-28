@@ -8,13 +8,13 @@ import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 
-public class LocalPdfReader implements IPdfLoader {
+public class LocalPdfReader implements PdfLoader {
 	private PdfReader reader;
 	private PdfStamper stamper;
 	private String sourceFile;
 	
-	public LocalPdfReader(String src) {
-		sourceFile = src;
+	public LocalPdfReader(String srcPath) {
+		sourceFile = srcPath;
 	}
 
 	@Override
@@ -34,7 +34,6 @@ public class LocalPdfReader implements IPdfLoader {
 
 	@Override
 	public void unload() {
-		
 		try {
 			if (stamper != null) {
 				stamper.setFormFlattening(true);

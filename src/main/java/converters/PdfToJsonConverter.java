@@ -1,10 +1,10 @@
-package pdfParsers;
+package converters;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import loaders.IPdfLoader;
+import loaders.PdfLoader;
 
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
@@ -19,14 +19,23 @@ import com.itextpdf.text.pdf.PdfDictionary;
 import com.itextpdf.text.pdf.PdfName;
 import com.itextpdf.text.pdf.PdfNumber;
 
+/**
+ * Reads a pdf file and returns a JSON string that contains all the fields in the file
+ * The returned JSON structure looks like the following:
+ * {fields: [{"field1": "value1"}, {"field2": "value2"},...]}
+ * 
+ * @author rogerawad
+ *
+ */
+
 public class PdfToJsonConverter {
-	private IPdfLoader pdfLoader;
+	private PdfLoader pdfLoader;
 	
-	public PdfToJsonConverter(final IPdfLoader loader) {
+	public PdfToJsonConverter(final PdfLoader loader) {
 		pdfLoader = loader;
 	}
 	
-	public String getFields() {
+	public String convert() {
 		ObjectNode json = null;
 		if (pdfLoader != null) {
 			AcroFields fields = pdfLoader.load();
