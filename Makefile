@@ -4,7 +4,7 @@ field_data:
 	java -jar pdfparser.jar get_fields testpdfs/CleanSlateSinglePage.pdf
 
 fill_fields:
-	java -jar pdfparser.jar \
+	java -jar target/pdfparser-1.0-SNAPSHOT-jar-with-dependencies.jar \
         set_fields \
         testpdfs/CleanSlateSinglePage.pdf \
         test.pdf \
