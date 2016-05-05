@@ -1,7 +1,7 @@
 
 
 field_data:
-	java -jar pdfparser.jar get_fields testpdfs/CleanSlateSinglePage.pdf
+	java -jar target/pdfparser-1.0-SNAPSHOT-jar-with-dependencies.jar get_fields testpdfs/CleanSlateSinglePage.pdf
 
 fill_fields:
 	java -jar target/pdfparser-1.0-SNAPSHOT-jar-with-dependencies.jar \
