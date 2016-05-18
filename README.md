@@ -33,7 +33,7 @@ This produces two jars in `pdfparser/target`:
 
 For example, the final path to the jar file that includes dependencies, relative to the root directory of this repository, might be `target/pdfparser-1.0-SNAPSHOT-jar-with-dependencies.jar`
 
-## Running the program
+## Using the `.jar`
 
 If we assume `$JARPATH` contains the path to the jarfile, for example:
 
@@ -52,7 +52,8 @@ This command will output a JSON with detailed information about the fields in a 
 Usage:
 
     java -jar $JARPATH get_fields <input PDF form path>
-    java -jar $JARPATH get_fields testpdfs/sample_form-filled.pdf
+    java -jar target/pdfparser-1.0-SNAPSHOT-jar-with-dependencies.jar \ 
+        get_fields testpdfs/sample_form-filled.pdf
 
 The output JSON will have a structure similar to this:
 
