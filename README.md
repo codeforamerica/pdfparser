@@ -43,7 +43,11 @@ then you can run the program by prefixing the path with `java -jar` and adding a
 
     java -jar $JARPATH <arguments...>
 
-The included Makefile contains examples of using the commands.
+There are three commands:
+
+- [`get_fields`](#get_fields---get-data-about-the-fields-in-a-pdf-form): Get data about the fields in a pdf form
+- [`set_fields`](#set_fields---use-a-json-to-fill-a-pdf-form): Use a JSON to fill a PDF form
+- [`concat_files`](#concat_files---combine-multiple-pdfs-into-one): Combine multiple PDFs into one
 
 ### `get_fields` - Get data about the fields in a pdf form
 
