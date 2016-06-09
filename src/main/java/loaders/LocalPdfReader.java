@@ -8,10 +8,10 @@ import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 
-public class LocalPdfReader implements PdfLoader {
+public final class LocalPdfReader implements PdfLoader {
 	private PdfReader reader;
 	private PdfStamper stamper;
-	private String sourceFile;
+	private final String sourceFile;
 	
 	public LocalPdfReader(String srcPath) {
 		sourceFile = srcPath;
@@ -28,6 +28,7 @@ public class LocalPdfReader implements PdfLoader {
 		} catch (DocumentException | IOException e) {
 			System.out.print(e.getMessage());
 			e.printStackTrace();
+			System.exit(-1);
 		}
 		return fields;
 	}
@@ -42,6 +43,7 @@ public class LocalPdfReader implements PdfLoader {
 		} catch (DocumentException | IOException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+			System.exit(-1);
 		}
 		
 	}
