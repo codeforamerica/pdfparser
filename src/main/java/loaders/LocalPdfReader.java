@@ -3,16 +3,16 @@ package loaders;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.AcroFields;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfStamper;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.pdf.AcroFields;
+import com.lowagie.text.pdf.PdfReader;
+import com.lowagie.text.pdf.PdfStamper;
 
 public class LocalPdfReader implements PdfLoader {
 	private PdfReader reader;
 	private PdfStamper stamper;
 	private String sourceFile;
-	
+
 	public LocalPdfReader(String srcPath) {
 		sourceFile = srcPath;
 	}
@@ -43,7 +43,7 @@ public class LocalPdfReader implements PdfLoader {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }

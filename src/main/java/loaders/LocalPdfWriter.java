@@ -7,10 +7,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.AcroFields;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfStamper;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.pdf.AcroFields;
+import com.lowagie.text.pdf.PdfReader;
+import com.lowagie.text.pdf.PdfStamper;
 
 public class LocalPdfWriter implements PdfLoader {
 	private String sourceFile;
@@ -18,7 +18,7 @@ public class LocalPdfWriter implements PdfLoader {
 	private FileOutputStream fop;
 	private PdfStamper stamper;
 	private PdfReader reader;
-	
+
 	public LocalPdfWriter(String srcPath, String destPath) {
 		sourceFile = srcPath;
 		destinationFile = destPath;
@@ -26,7 +26,7 @@ public class LocalPdfWriter implements PdfLoader {
 
 	@Override
 	public AcroFields load() {
-		AcroFields fields = null; 
+		AcroFields fields = null;
 		try {
 			reader = new PdfReader(getInputFileFullPath());
 			File file = createDestinationFile();
@@ -66,13 +66,13 @@ public class LocalPdfWriter implements PdfLoader {
 			}
 		}
 	}
-	
+
 	private String getInputFileFullPath() {
 		Path inputPath = Paths.get(sourceFile);
 		Path fullPath = inputPath.toAbsolutePath();
 		return fullPath != null ? fullPath.toString() : "";
 	}
-	
+
 	private File createDestinationFile() throws IOException {
 		File file = new File(destinationFile);
 

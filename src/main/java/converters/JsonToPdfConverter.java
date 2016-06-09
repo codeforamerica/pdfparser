@@ -12,27 +12,27 @@ import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
 
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.AcroFields;
-import com.itextpdf.text.pdf.AcroFields.Item;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.pdf.AcroFields;
+import com.lowagie.text.pdf.AcroFields.Item;
 
-/** 
+/**
  * Reads a JSON and creates a PDF file based on that JSON
- * The JSON structure should look like the following: 
+ * The JSON structure should look like the following:
  * {fields: [{"field1": "value1"}, {"field2": "value2"},...]}
- * 
+ *
  * @author rogerawad
  *
  */
 public class JsonToPdfConverter {
 	private PdfLoader pdfWriter;
 	private String jsonString;
-	
+
 	public JsonToPdfConverter(PdfLoader writer, final String json) {
 		pdfWriter = writer;
 		jsonString = json;
 	}
-	
+
 	public void convert() {
 		if (pdfWriter != null) {
 			AcroFields fields = pdfWriter.load();
@@ -42,7 +42,7 @@ public class JsonToPdfConverter {
 			pdfWriter.unload();
 		}
     }
-	
+
 	private void setValues(AcroFields fields, final String jsonString) {
 		ObjectMapper mapper = new ObjectMapper();
 		JsonFactory factory = mapper.getJsonFactory();
@@ -56,12 +56,12 @@ public class JsonToPdfConverter {
 			rootNode = mapper.readTree(parser);
 			fieldsNode = (ArrayNode) rootNode.get("fields");
 			JsonNode node;
-			
+
 			Map<String, Item> listOfFields = fields.getFields();
 	    	Iterator<Map.Entry<String, Item>> iter = listOfFields.entrySet().iterator();
 	    	Map.Entry<String, Item> entry;
 	    	String key;
-	    	
+
 	    	// loop through the fields and set their values from their respective JSON nodes
 	    	while (iter.hasNext()) {
 	    		entry = iter.next();
@@ -87,7 +87,7 @@ public class JsonToPdfConverter {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private int getFieldType(final AcroFields fields, final String name) {
 		return fields.getFieldType(name);
 	}

@@ -10,31 +10,31 @@ import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
 
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.AcroFields;
-import com.itextpdf.text.pdf.AcroFields.FieldPosition;
-import com.itextpdf.text.pdf.AcroFields.Item;
-import com.itextpdf.text.pdf.BaseField;
-import com.itextpdf.text.pdf.PdfDictionary;
-import com.itextpdf.text.pdf.PdfName;
-import com.itextpdf.text.pdf.PdfNumber;
+import com.lowagie.text.Rectangle;
+import com.lowagie.text.pdf.AcroFields;
+// import com.lowagie.text.pdf.AcroFields.FieldPosition;
+import com.lowagie.text.pdf.AcroFields.Item;
+import com.lowagie.text.pdf.BaseField;
+import com.lowagie.text.pdf.PdfDictionary;
+import com.lowagie.text.pdf.PdfName;
+import com.lowagie.text.pdf.PdfNumber;
 
 /**
  * Reads a pdf file and returns a JSON string that contains all the fields in the file
  * The returned JSON structure looks like the following:
  * {fields: [{"field1": "value1"}, {"field2": "value2"},...]}
- * 
+ *
  * @author rogerawad
  *
  */
 
 public class PdfToJsonConverter {
 	private PdfLoader pdfLoader;
-	
+
 	public PdfToJsonConverter(final PdfLoader loader) {
 		pdfLoader = loader;
 	}
-	
+
 	public String convert() {
 		ObjectNode json = null;
 		if (pdfLoader != null) {
@@ -43,34 +43,34 @@ public class PdfToJsonConverter {
 				json = createJson(fields);
 			}
 		}
-        
+
         return json.toString();
     }
-    
+
 	protected ObjectNode createJson(final AcroFields fields) {
     	JsonNodeFactory nodeFactory = JsonNodeFactory.instance;
         ObjectNode rootNode = nodeFactory.objectNode();
         ArrayNode jsonFields = nodeFactory.arrayNode();
-        
+
         Map<String, Item> listOfFields = fields.getFields();
     	Iterator<Map.Entry<String, Item>> iter = listOfFields.entrySet().iterator();
-    	
+
     	while (iter.hasNext()) {
     		ObjectNode childNode = createNodeFromEntry(fields, iter.next());
     		jsonFields.add(childNode);
     	}
-    	
+
     	ObjectNode childNode = getAppearanceNode(fields);
     	rootNode.put("appearance", childNode);
     	rootNode.put("fields", jsonFields);
         return rootNode;
     }
-    
+
     protected ObjectNode getFileMetadata(final AcroFields fields) {
     	ObjectNode fileNode = JsonNodeFactory.instance.objectNode();
     	fileNode.put("totalRevisions", fields.getTotalRevisions());
-		
-    	return fileNode; 
+
+    	return fileNode;
     }
 
     protected ObjectNode getAppearanceNode(final AcroFields fields) {
@@ -79,13 +79,13 @@ public class PdfToJsonConverter {
     	childNode.put("font", AcroFields.DA_FONT);
     	childNode.put("fontSize", AcroFields.DA_SIZE);
     	childNode.put("fontColor", AcroFields.DA_COLOR);
-    	
+
 		return childNode;
 	}
-    
+
 	protected ObjectNode createNodeFromEntry(final AcroFields fields, final Map.Entry<String, Item> entry) {
     	ObjectNode childNode = JsonNodeFactory.instance.objectNode();
-    	
+
     	String value;
     	String options[];
     	List<FieldPosition> positions;
@@ -104,10 +104,10 @@ public class PdfToJsonConverter {
         if (positions != null) {
         	childNode.put("positions", getFieldPositionNode(positions));
         }
-		
+
 		return childNode;
     }
-    
+
     protected boolean isRequired(final Map.Entry<String, Item> entry) {
 		boolean required = false;
 		if (entry != null) {
@@ -115,13 +115,13 @@ public class PdfToJsonConverter {
 			PdfDictionary dict = item.getMerged(0);
 			PdfNumber flags = dict.getAsNumber(PdfName.FF);
 			if (flags != null && (flags.intValue() & BaseField.REQUIRED) > 0) {
-				required = true;				
+				required = true;
 			}
 		}
-		
+
 		return required;
 	}
-	
+
 	protected String getAltText(final Map.Entry<String, Item> entry) {
 		String altText = "";
 		if (entry != null) {
@@ -131,29 +131,29 @@ public class PdfToJsonConverter {
 				altText = dict.getAsString(PdfName.ALT).toString();
 			}
 		}
-		
+
 		return altText;
 	}
-    
+
 	protected int getTabIndex(final AcroFields fields, final Map.Entry<String, Item> entry) {
     	Item item = fields.getFieldItem(entry.getKey());
 		return item.getTabOrder(0);
     }
-    
+
 	protected ArrayNode getOptionsArrayNode(final String options[]) {
     	ArrayNode optionsArray = JsonNodeFactory.instance.arrayNode();
     	for(String option : options) {
     		optionsArray.add(option);
     	}
-    	
+
     	return optionsArray;
     }
-    
+
 	protected ArrayNode getFieldPositionNode(final List<FieldPosition> positions) {
     	ArrayNode positionsArray = JsonNodeFactory.instance.arrayNode();
     	ObjectNode childNode = JsonNodeFactory.instance.objectNode();
     	Rectangle rect;
-    	
+
     	for (FieldPosition position : positions) {
     		childNode.put("page", position.page);
     		rect = position.position;
@@ -163,13 +163,13 @@ public class PdfToJsonConverter {
     		childNode.put("top", rect.getTop());
     		positionsArray.add(childNode);
     	}
-    	
+
     	return positionsArray;
     }
-    
+
 	protected String[] getFieldOptionsBasedOnType(final AcroFields fields, final String name) {
     	String options[] = null;
-    	
+
     	switch(fields.getFieldType(name)) {
     	case AcroFields.FIELD_TYPE_PUSHBUTTON:
     		options = fields.getListSelection(name);
@@ -193,10 +193,10 @@ public class PdfToJsonConverter {
     	}
     	return options;
     }
-    
+
 	protected String getFieldTypeString(final AcroFields fields, final String name) {
     	String type = null;
-    	
+
     	switch(fields.getFieldType(name)) {
     	case AcroFields.FIELD_TYPE_PUSHBUTTON:
     		type = "button";
@@ -225,13 +225,13 @@ public class PdfToJsonConverter {
     	}
     	return type;
     }
-    
+
 //    private void miscellaneous(AcroFields fields) throws DocumentException, IOException {
 //    	if (fields != null) {
 //	    	// document signature fields iterate through them and check if the sig field covers whole doc
 //	        List signatures = fields.getBlankSignatureNames();
 //	        int revisions = fields.getTotalRevisions();
-//	                
+//
 //	        // fields.getAppearanceStates(arg0)
 //	        //BaseFont bf = BaseFont.createFont(FONT, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, false, null, null, false);
 //	        //fields.setFieldProperty("Name", "textfont", bf, null);
