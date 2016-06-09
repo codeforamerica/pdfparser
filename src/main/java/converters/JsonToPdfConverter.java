@@ -4,10 +4,6 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
-import loaders.PdfLoader;
-import sun.font.FontManager;
-import sun.font.FontManagerFactory;
-
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonParser;
@@ -18,6 +14,8 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.AcroFields.Item;
 import com.itextpdf.text.pdf.BaseFont;
+
+import loaders.PdfLoader;
 
 /** 
  * Reads a JSON and creates a PDF file based on that JSON
@@ -67,7 +65,9 @@ public class JsonToPdfConverter {
 	    	Map.Entry<String, Item> entry;
 	    	String key;
 	    	
-	    	setUnicodeFont(fields);
+	    	if (!this.fontPath.isEmpty()) {
+	    		setUnicodeFont(fields);
+	    	}
 	    	
 	    	// loop through the fields and set their values from their respective JSON nodes
 	    	while (iter.hasNext()) {

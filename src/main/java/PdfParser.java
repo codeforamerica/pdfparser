@@ -46,7 +46,11 @@ public class PdfParser {
     		System.out.print(json);
     	} else if (args.length >= 4 && args[0].equals("set_fields") && args[1].length() > 0 && 
     			args[2].length() > 0 && args[3].length() > 0) {
-    		writeJsonToPdf(args[1], args[2], args[3], args[5]);
+    		String fontPath = "";
+    		if (args.length > 4) {
+    			fontPath = args[5];
+    		}
+    		writeJsonToPdf(args[1], args[2], args[3], fontPath);
     	} else if (args.length > 3 && args[0].equals("concat_files")) {
     		concatFiles(args);
     	} else {
