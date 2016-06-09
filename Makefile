@@ -1,4 +1,6 @@
-
+.PHONY: default
+default:
+	mvn clean package
 
 field_data:
 	java -jar target/pdfparser-1.0-SNAPSHOT-jar-with-dependencies.jar \
