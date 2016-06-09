@@ -44,9 +44,9 @@ public class PdfParser {
     	if (args.length == 2 && args[0].equals("get_fields") && args[1].length() > 0) {
     		String json = readPdfFields(args[1]);
     		System.out.print(json);
-    	} else if (args.length == 4 && args[0].equals("set_fields") && args[1].length() > 0 && 
+    	} else if (args.length >= 4 && args[0].equals("set_fields") && args[1].length() > 0 && 
     			args[2].length() > 0 && args[3].length() > 0) {
-    		writeJsonToPdf(args[1], args[2], args[3]);
+    		writeJsonToPdf(args[1], args[2], args[3], args[5]);
     	} else if (args.length > 3 && args[0].equals("concat_files")) {
     		concatFiles(args);
     	} else {
@@ -73,8 +73,8 @@ public class PdfParser {
 		return converter.convert();
 	}
 
-	private static void writeJsonToPdf(String src, String dest, String json) {
-		JsonToPdfConverter pdfWriter = new JsonToPdfConverter(new LocalPdfWriter(src, dest), json);
+	private static void writeJsonToPdf(String src, String dest, String json, String fontPath) {
+		JsonToPdfConverter pdfWriter = new JsonToPdfConverter(new LocalPdfWriter(src, dest), json, fontPath);
 		pdfWriter.convert();
 	}
 	

@@ -18,7 +18,8 @@ arabic_test:
 		set_fields \
         testpdfs/sample_form-filled.pdf \
 		arabic.pdf \
-	    '{"fields": [{"Given Name Text Box": "HI البنك المتحد"},{"Family Name Text Box": "\u0627\u0644\u0628\u0646\u0643 \u0627\u0644\u0645\u062a\u062d\u062f"}]}'
+	    '{"fields": [{"Given Name Text Box": "HI البنك المتحد"},{"Family Name Text Box": "\u0627\u0644\u0628\u0646\u0643 \u0627\u0644\u0645\u062a\u062d\u062f"}]}' \
+	    font_path '/Library/Fonts/Arial Unicode.ttf'
 
 combine_pdfs:
 	java -jar target/pdfparser-1.0-SNAPSHOT-jar-with-dependencies.jar \

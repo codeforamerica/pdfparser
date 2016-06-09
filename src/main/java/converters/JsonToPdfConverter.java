@@ -30,10 +30,12 @@ import com.itextpdf.text.pdf.BaseFont;
 public class JsonToPdfConverter {
 	private PdfLoader pdfWriter;
 	private String jsonString;
+	private final String fontPath;
 	
-	public JsonToPdfConverter(PdfLoader writer, final String json) {
+	public JsonToPdfConverter(PdfLoader writer, final String json, String fontPath) {
 		pdfWriter = writer;
 		jsonString = json;
+		this.fontPath = fontPath;
 	}
 	
 	public void convert() {
@@ -95,23 +97,23 @@ public class JsonToPdfConverter {
 	}
 	
 	private void setUnicodeFont(AcroFields fields) throws DocumentException, IOException {
-		BaseFont unicode = BaseFont.createFont(this.buildFontPath("arialuni.ttf"), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+		BaseFont unicode = BaseFont.createFont(this.fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         fields.addSubstitutionFont(unicode);
 	}
 	
-	private String getSystemFontDirectory() {
-		String os = System.getProperty("os.name");
-		String path = null;
-		
-		if (os.equals("Mac OS X")) {
-			path = "/System/Library/Fonts/";
-		}
-		return path;
-	}
-	
-	private String buildFontPath(String fontFileName) {
-		return this.getSystemFontDirectory() + fontFileName;
-	}
+//	private String getSystemFontDirectory() {
+//		String os = System.getProperty("os.name");
+//		String path = null;
+//		
+//		if (os.equals("Mac OS X")) {
+//			path = "/System/Library/Fonts/";
+//		}
+//		return path;
+//	}
+//	
+//	private String buildFontPath(String fontFileName) {
+//		return this.getSystemFontDirectory() + fontFileName;
+//	}
 	
 	private int getFieldType(final AcroFields fields, final String name) {
 		return fields.getFieldType(name);
