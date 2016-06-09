@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 import loaders.PdfLoader;
+import sun.font.FontManager;
+import sun.font.FontManagerFactory;
 
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonNode;
@@ -15,6 +17,7 @@ import org.codehaus.jackson.node.ArrayNode;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.AcroFields.Item;
+import com.itextpdf.text.pdf.BaseFont;
 
 /** 
  * Reads a JSON and creates a PDF file based on that JSON
@@ -62,6 +65,8 @@ public class JsonToPdfConverter {
 	    	Map.Entry<String, Item> entry;
 	    	String key;
 	    	
+	    	setUnicodeFont(fields);
+	    	
 	    	// loop through the fields and set their values from their respective JSON nodes
 	    	while (iter.hasNext()) {
 	    		entry = iter.next();
@@ -85,7 +90,27 @@ public class JsonToPdfConverter {
 		} catch (IOException | DocumentException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+			System.exit(-1);
 		}
+	}
+	
+	private void setUnicodeFont(AcroFields fields) throws DocumentException, IOException {
+		BaseFont unicode = BaseFont.createFont(this.buildFontPath("arialuni.ttf"), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        fields.addSubstitutionFont(unicode);
+	}
+	
+	private String getSystemFontDirectory() {
+		String os = System.getProperty("os.name");
+		String path = null;
+		
+		if (os.equals("Mac OS X")) {
+			path = "/System/Library/Fonts/";
+		}
+		return path;
+	}
+	
+	private String buildFontPath(String fontFileName) {
+		return this.getSystemFontDirectory() + fontFileName;
 	}
 	
 	private int getFieldType(final AcroFields fields, final String name) {

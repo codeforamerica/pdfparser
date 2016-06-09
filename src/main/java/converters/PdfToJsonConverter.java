@@ -29,7 +29,7 @@ import com.itextpdf.text.pdf.PdfNumber;
  */
 
 public class PdfToJsonConverter {
-	private PdfLoader pdfLoader;
+	private final PdfLoader pdfLoader;
 	
 	public PdfToJsonConverter(final PdfLoader loader) {
 		pdfLoader = loader;
@@ -47,7 +47,7 @@ public class PdfToJsonConverter {
         return json.toString();
     }
     
-	protected ObjectNode createJson(final AcroFields fields) {
+	private ObjectNode createJson(final AcroFields fields) {
     	JsonNodeFactory nodeFactory = JsonNodeFactory.instance;
         ObjectNode rootNode = nodeFactory.objectNode();
         ArrayNode jsonFields = nodeFactory.arrayNode();
@@ -66,14 +66,14 @@ public class PdfToJsonConverter {
         return rootNode;
     }
     
-    protected ObjectNode getFileMetadata(final AcroFields fields) {
+    private ObjectNode getFileMetadata(final AcroFields fields) {
     	ObjectNode fileNode = JsonNodeFactory.instance.objectNode();
     	fileNode.put("totalRevisions", fields.getTotalRevisions());
 		
     	return fileNode; 
     }
 
-    protected ObjectNode getAppearanceNode(final AcroFields fields) {
+    private ObjectNode getAppearanceNode(final AcroFields fields) {
 		ObjectNode childNode = JsonNodeFactory.instance.objectNode();
 
     	childNode.put("font", AcroFields.DA_FONT);
@@ -83,7 +83,7 @@ public class PdfToJsonConverter {
 		return childNode;
 	}
     
-	protected ObjectNode createNodeFromEntry(final AcroFields fields, final Map.Entry<String, Item> entry) {
+    private ObjectNode createNodeFromEntry(final AcroFields fields, final Map.Entry<String, Item> entry) {
     	ObjectNode childNode = JsonNodeFactory.instance.objectNode();
     	
     	String value;
@@ -108,7 +108,7 @@ public class PdfToJsonConverter {
 		return childNode;
     }
     
-    protected boolean isRequired(final Map.Entry<String, Item> entry) {
+    private boolean isRequired(final Map.Entry<String, Item> entry) {
 		boolean required = false;
 		if (entry != null) {
 			Item item = entry.getValue();
@@ -122,7 +122,7 @@ public class PdfToJsonConverter {
 		return required;
 	}
 	
-	protected String getAltText(final Map.Entry<String, Item> entry) {
+    private String getAltText(final Map.Entry<String, Item> entry) {
 		String altText = "";
 		if (entry != null) {
 			Item item = entry.getValue();
@@ -135,12 +135,12 @@ public class PdfToJsonConverter {
 		return altText;
 	}
     
-	protected int getTabIndex(final AcroFields fields, final Map.Entry<String, Item> entry) {
+    private int getTabIndex(final AcroFields fields, final Map.Entry<String, Item> entry) {
     	Item item = fields.getFieldItem(entry.getKey());
 		return item.getTabOrder(0);
     }
     
-	protected ArrayNode getOptionsArrayNode(final String options[]) {
+    private ArrayNode getOptionsArrayNode(final String options[]) {
     	ArrayNode optionsArray = JsonNodeFactory.instance.arrayNode();
     	for(String option : options) {
     		optionsArray.add(option);
@@ -149,7 +149,7 @@ public class PdfToJsonConverter {
     	return optionsArray;
     }
     
-	protected ArrayNode getFieldPositionNode(final List<FieldPosition> positions) {
+    private ArrayNode getFieldPositionNode(final List<FieldPosition> positions) {
     	ArrayNode positionsArray = JsonNodeFactory.instance.arrayNode();
     	ObjectNode childNode = JsonNodeFactory.instance.objectNode();
     	Rectangle rect;
@@ -167,7 +167,7 @@ public class PdfToJsonConverter {
     	return positionsArray;
     }
     
-	protected String[] getFieldOptionsBasedOnType(final AcroFields fields, final String name) {
+    private String[] getFieldOptionsBasedOnType(final AcroFields fields, final String name) {
     	String options[] = null;
     	
     	switch(fields.getFieldType(name)) {
@@ -194,7 +194,7 @@ public class PdfToJsonConverter {
     	return options;
     }
     
-	protected String getFieldTypeString(final AcroFields fields, final String name) {
+    private String getFieldTypeString(final AcroFields fields, final String name) {
     	String type = null;
     	
     	switch(fields.getFieldType(name)) {
