@@ -12,7 +12,6 @@ import org.codehaus.jackson.node.ObjectNode;
 
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.AcroFields;
-// import com.lowagie.text.pdf.AcroFields.FieldPosition;
 import com.lowagie.text.pdf.AcroFields.Item;
 import com.lowagie.text.pdf.BaseField;
 import com.lowagie.text.pdf.PdfDictionary;
@@ -86,10 +85,8 @@ public class PdfToJsonConverter {
 
     	String value;
     	String options[];
-    	List<FieldPosition> positions;
     	value = fields.getField(entry.getKey());
 		options = this.getFieldOptionsBasedOnType(fields, entry.getKey());
-		positions = fields.getFieldPositions(entry.getKey());
         childNode.put("name", entry.getKey());
         childNode.put("value", value);
         childNode.put("type", getFieldTypeString(fields, entry.getKey()));
@@ -99,10 +96,7 @@ public class PdfToJsonConverter {
         if (options != null) {
         	childNode.put("options", getOptionsArrayNode(options));
         }
-        if (positions != null) {
-        	childNode.put("positions", getFieldPositionNode(positions));
-        }
-
+        
 		return childNode;
     }
 
@@ -147,23 +141,6 @@ public class PdfToJsonConverter {
     	return optionsArray;
     }
 
-	protected ArrayNode getFieldPositionNode(final List<FieldPosition> positions) {
-    	ArrayNode positionsArray = JsonNodeFactory.instance.arrayNode();
-    	ObjectNode childNode = JsonNodeFactory.instance.objectNode();
-    	Rectangle rect;
-
-    	for (FieldPosition position : positions) {
-    		childNode.put("page", position.page);
-    		rect = position.position;
-    		childNode.put("width", rect.getWidth());
-    		childNode.put("height", rect.getHeight());
-    		childNode.put("left", rect.getLeft());
-    		childNode.put("top", rect.getTop());
-    		positionsArray.add(childNode);
-    	}
-
-    	return positionsArray;
-    }
 
 	protected String[] getFieldOptionsBasedOnType(final AcroFields fields, final String name) {
     	String options[] = null;

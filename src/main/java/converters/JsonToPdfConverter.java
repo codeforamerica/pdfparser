@@ -13,6 +13,7 @@ import org.codehaus.jackson.node.ArrayNode;
 import com.lowagie.text.pdf.AcroFields;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.pdf.BaseFont;
+import com.lowagie.text.pdf.AcroFields.Item;
 
 import loaders.PdfLoader;
 
