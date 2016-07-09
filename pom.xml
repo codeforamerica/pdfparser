@@ -19,6 +19,8 @@
             <groupId>com.github.rtfarte</groupId>
             <artifactId>openpdf</artifactId>
             <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/openpdf/openpdf-1.0.jar</systemPath>
         </dependency>
 
         <!-- Jackson dependencies -->
