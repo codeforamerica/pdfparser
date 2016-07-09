@@ -14,16 +14,11 @@
     </scm>
 
     <dependencies>
-        <!-- IText dependencies -->
+        <!-- openpdf dependencies -->
         <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>itextpdf</artifactId>
-            <version>${itext-pdf.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>itext-pdfa</artifactId>
-            <version>${itext-pdf.version}</version>
+            <groupId>com.github.rtfarte</groupId>
+            <artifactId>openpdf</artifactId>
+            <version>1.0</version>
         </dependency>
 
         <!-- Jackson dependencies -->
@@ -84,7 +79,7 @@
             </plugin>
         </plugins>
     </build>
-    
+
     <properties>
         <jdkLevel>1.7</jdkLevel>
         <source.encoding>UTF-8</source.encoding>

@@ -10,18 +10,14 @@ import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
 
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.AcroFields;
-import com.itextpdf.text.pdf.AcroFields.Item;
-import com.itextpdf.text.pdf.BaseFont;
-
 import loaders.PdfLoader;
 
-/** 
+
+/**
  * Reads a JSON and creates a PDF file based on that JSON
- * The JSON structure should look like the following: 
+ * The JSON structure should look like the following:
  * {fields: [{"field1": "value1"}, {"field2": "value2"},...]}
- * 
+ *
  * @author rogerawad
  *
  */
@@ -29,13 +25,13 @@ public class JsonToPdfConverter {
 	private PdfLoader pdfWriter;
 	private String jsonString;
 	private final String fontPath;
-	
-	public JsonToPdfConverter(PdfLoader writer, final String json, String fontPath) {
+
+	public JsonToPdfConverter(PdfLoader writer, final String json) {
 		pdfWriter = writer;
 		jsonString = json;
 		this.fontPath = fontPath;
 	}
-	
+
 	public void convert() {
 		if (pdfWriter != null) {
 			AcroFields fields = pdfWriter.load();
@@ -45,7 +41,7 @@ public class JsonToPdfConverter {
 			pdfWriter.unload();
 		}
     }
-	
+
 	private void setValues(AcroFields fields, final String jsonString) {
 		ObjectMapper mapper = new ObjectMapper();
 		JsonFactory factory = mapper.getJsonFactory();
@@ -59,16 +55,15 @@ public class JsonToPdfConverter {
 			rootNode = mapper.readTree(parser);
 			fieldsNode = (ArrayNode) rootNode.get("fields");
 			JsonNode node;
-			
+
 			Map<String, Item> listOfFields = fields.getFields();
 	    	Iterator<Map.Entry<String, Item>> iter = listOfFields.entrySet().iterator();
 	    	Map.Entry<String, Item> entry;
 	    	String key;
-	    	
 	    	if (!this.fontPath.isEmpty()) {
 	    		setUnicodeFont(fields);
 	    	}
-	    	
+
 	    	// loop through the fields and set their values from their respective JSON nodes
 	    	while (iter.hasNext()) {
 	    		entry = iter.next();
@@ -95,26 +90,13 @@ public class JsonToPdfConverter {
 			System.exit(-1);
 		}
 	}
-	
+
 	private void setUnicodeFont(AcroFields fields) throws DocumentException, IOException {
 		BaseFont unicode = BaseFont.createFont(this.fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         fields.addSubstitutionFont(unicode);
 	}
 	
-//	private String getSystemFontDirectory() {
-//		String os = System.getProperty("os.name");
-//		String path = null;
-//		
-//		if (os.equals("Mac OS X")) {
-//			path = "/System/Library/Fonts/";
-//		}
-//		return path;
-//	}
-//	
-//	private String buildFontPath(String fontFileName) {
-//		return this.getSystemFontDirectory() + fontFileName;
-//	}
-	
+
 	private int getFieldType(final AcroFields fields, final String name) {
 		return fields.getFieldType(name);
 	}
