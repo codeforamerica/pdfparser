@@ -44,11 +44,7 @@ public class PdfParser {
     	if (args.length == 2 && args[0].equals("get_fields") && args[1].length() > 0) {
     		String json = readPdfFields(args[1]);
     		System.out.print(json);
-<<<<<<< HEAD
-    	} else if (args.length >= 4 && args[0].equals("set_fields") && args[1].length() > 0 && 
-=======
-    	} else if (args.length == 4 && args[0].equals("set_fields") && args[1].length() > 0 &&
->>>>>>> 67721a85e34838b1436015ead36a94d8f7b7315e
+    	} else if (args.length >= 4 && args[0].equals("set_fields") && args[1].length() > 0 &&
     			args[2].length() > 0 && args[3].length() > 0) {
     		String fontPath = "";
     		if (args.length > 4) {
