@@ -9,6 +9,7 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
+import com.lowagie.text.pdf.BaseFont;
 
 import loaders.PdfLoader;
 
