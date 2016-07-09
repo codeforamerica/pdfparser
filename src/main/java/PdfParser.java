@@ -2,13 +2,13 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.io.IOException;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
-import com.lowagie.text.pdf.PdfCopy;
 import com.lowagie.text.pdf.PdfReader;
-import com.lowagie.text.pdf.PdfSmartCopy;
+import com.lowagie.text.pdf.PdfCopyForms;
 
 import converters.JsonToPdfConverter;
 import converters.PdfToJsonConverter;
@@ -88,13 +88,11 @@ public class PdfParser {
 		for (int i = 1; i < numArgs - 1; i++) {
 			srcFiles[i - 1] = argv[i];
 		}
-		Document document = new Document();
-        FileOutputStream outputStream = new FileOutputStream(argv[numArgs - 1]);
-        PdfCopy copy;
+        OutputStream outputStream = new FileOutputStream(argv[numArgs - 1]);
+        PdfCopyForms copy;
 		try {
-			copy = new PdfSmartCopy(document, outputStream);
+			copy = new PdfCopyForms(outputStream);
 
-	        document.open();
 	        for (String srcFile : srcFiles) {
 	        	File inFile = new File(srcFile);
 	            PdfReader reader;
@@ -105,6 +103,5 @@ public class PdfParser {
 		} catch (IOException | DocumentException e) {
 			e.printStackTrace();
 		}
-        document.close();
 	}
 }
