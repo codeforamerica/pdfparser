@@ -14,15 +14,6 @@
     </scm>
 
     <dependencies>
-        <!-- openpdf dependencies -->
-        <dependency>
-            <groupId>com.github.rtfarte</groupId>
-            <artifactId>openpdf</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/openpdf/openpdf-1.0.jar</systemPath>
-        </dependency>
-
         <!-- Jackson dependencies -->
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
@@ -34,6 +25,19 @@
             <artifactId>jackson-mapper-asl</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+        
+        <!-- Open PDF & associated dependencies -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.54</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.bengolder</groupId>
+            <artifactId>openpdf</artifactId>
+            <version>1.0</version>
+        </dependency>
+    
     </dependencies>
 
     <build>
@@ -79,19 +83,6 @@
                     </archive>
                 </configuration>
             </plugin>
-              <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.4</version>
-                <executions>
-                  <execution>
-                    <phase>package</phase>
-                    <goals>
-                      <goal>shade</goal>
-                    </goals>
-                  </execution>
-                </executions>
-              </plugin>
         </plugins>
     </build>
 
@@ -105,3 +96,5 @@
         <jackson.version>1.7.3</jackson.version>
     </properties>
 </project>
+
+
