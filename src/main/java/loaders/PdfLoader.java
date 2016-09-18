@@ -1,6 +1,6 @@
 package loaders;
 
-import com.itextpdf.text.pdf.AcroFields;
+import com.lowagie.text.pdf.AcroFields;
 
 public interface PdfLoader {
 	AcroFields load();
