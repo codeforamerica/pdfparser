@@ -99,6 +99,7 @@ public class PdfParser {
 				copy.addDocument(reader);
 	            reader.close();
 	        }
+            copy.close();
 		} catch (IOException | DocumentException e) {
 			e.printStackTrace();
 		}
