@@ -1,4 +1,5 @@
 # pdfparser
+[![Build Status](https://travis-ci.org/codeforamerica/pdfparser.svg?branch=master)](https://travis-ci.org/codeforamerica/pdfparser)
 
 pdfparser is a java-based command line utility for filling PDF forms. It builds on the [iText](http://developers.itextpdf.com/apis) library and has usage that is vaguely similar to [pdftk](https://www.pdflabs.com/docs/pdftk-man-page/).
 
