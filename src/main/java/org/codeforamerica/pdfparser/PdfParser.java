@@ -73,7 +73,11 @@ public class PdfParser {
     	return error;
     }
 
-	private static String readPdfFields(String srcFile) {
+	/**
+	 * @param srcFile source file path
+	 * @return JSON String of PDF fields & information 
+	 */
+	static String readPdfFields(String srcFile) {
 		PdfToJsonConverter converter = new PdfToJsonConverter(new LocalPdfReader(srcFile));
 		return converter.convert();
 	}
