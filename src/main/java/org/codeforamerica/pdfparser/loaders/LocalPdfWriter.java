@@ -1,4 +1,4 @@
-package loaders;
+package org.codeforamerica.pdfparser.loaders;
 
 import java.io.File;
 import java.io.FileOutputStream;

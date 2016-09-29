@@ -1,11 +1,10 @@
-package converters;
+package org.codeforamerica.pdfparser.converters;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import loaders.PdfLoader;
-
+import org.codeforamerica.pdfparser.loaders.PdfLoader;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;

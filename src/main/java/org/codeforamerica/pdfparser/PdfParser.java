@@ -1,18 +1,20 @@
+package org.codeforamerica.pdfparser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+
+import org.codeforamerica.pdfparser.converters.JsonToPdfConverter;
+import org.codeforamerica.pdfparser.converters.PdfToJsonConverter;
+import org.codeforamerica.pdfparser.loaders.LocalPdfReader;
+import org.codeforamerica.pdfparser.loaders.LocalPdfWriter;
+
 import java.io.IOException;
 
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfCopyForms;
-
-import converters.JsonToPdfConverter;
-import converters.PdfToJsonConverter;
-import loaders.LocalPdfReader;
-import loaders.LocalPdfWriter;
 
 /**
  *

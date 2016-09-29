@@ -1,9 +1,10 @@
-package converters;
+package org.codeforamerica.pdfparser.converters;
 
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.codeforamerica.pdfparser.loaders.PdfLoader;
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonParser;
@@ -14,8 +15,6 @@ import com.lowagie.text.pdf.AcroFields;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.AcroFields.Item;
-
-import loaders.PdfLoader;
 
 
 /**

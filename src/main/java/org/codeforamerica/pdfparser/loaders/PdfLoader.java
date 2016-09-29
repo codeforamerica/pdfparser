@@ -1,4 +1,4 @@
-package loaders;
+package org.codeforamerica.pdfparser.loaders;
 
 import com.lowagie.text.pdf.AcroFields;
 
