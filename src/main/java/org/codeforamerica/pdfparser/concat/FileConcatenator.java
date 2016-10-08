@@ -26,13 +26,8 @@ public class FileConcatenator {
         pdfCopy = new PdfCopyForms(outputStream);
     }
 
-    PdfReader parseSrcFile(String srcFilePath) throws IOException {
-        File inFile = new File(srcFilePath);
-        return new PdfReader(inFile.getAbsolutePath());
-    }
-
     void addSrcFile(String srcFilePath) throws IOException, DocumentException {
-        PdfReader reader = parseSrcFile(srcFilePath);
+        PdfReader reader = new PdfReader(srcFilePath);
         pdfCopy.addDocument(reader);
         reader.close();
     }
