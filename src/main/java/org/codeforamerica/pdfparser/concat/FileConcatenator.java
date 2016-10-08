@@ -27,8 +27,7 @@ public class FileConcatenator {
     }
 
     PdfReader parseSrcFile(String srcFilePath) throws IOException {
-        ClassLoader classLoader = getClass().getClassLoader();
-        File inFile = new File(classLoader.getResource(srcFilePath).getFile());
+        File inFile = new File(srcFilePath);
         return new PdfReader(inFile.getAbsolutePath());
     }
 

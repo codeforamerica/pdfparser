@@ -21,7 +21,7 @@ public class FileConcatenatorTest {
 
     @Test
     public void testAddSrcFileWithOneInputCopiesFile() throws FileNotFoundException, IOException {
-        String[] srcFiles = new String[]{"testpdfs/text.pdf"};
+        String[] srcFiles = new String[]{"src/test/resources/testpdfs/text.pdf"};
         String outputPath = "output.pdf";
         FileConcatenator concat = new FileConcatenator(srcFiles, outputPath);
         concat.concatenateAndWrite();
