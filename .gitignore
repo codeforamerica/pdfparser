@@ -1,6 +1,8 @@
 .DS_Store
 .classpath
 .project
+.idea
+*.iml
 results/
 target
 /bin/
