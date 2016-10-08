@@ -1,4 +1,4 @@
-.PHONY: default
+.PHONY: default field_data fill_fields arabic_test combine_pdfs test
 default:
 	mvn clean package
 
@@ -31,3 +31,9 @@ combine_pdfs:
         testpdfs/signature.pdf \
         testpdfs/text.pdf \
         output.pdf
+
+test:
+	make field_data
+	make fill_fields
+	make arabic_test
+	make combine_pdfs
