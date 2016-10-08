@@ -1,6 +1,6 @@
 .PHONY: default field_data fill_fields arabic_test combine_pdfs test
 
-testpdfs = src/test/resources/testpdfs
+testpdfs=src/test/resources/testpdfs
 
 default:
 	mvn clean package
@@ -15,6 +15,7 @@ fill_fields:
         $(testpdfs)/sample_form-filled.pdf \
         output.pdf \
         '{"fields": [{"Given Name Text Box": "Henry"},{"Family Name Text Box": "Raspberry"}]}'
+
 
 arabic_test:
 	java -jar target/pdfparser-1.0-SNAPSHOT-jar-with-dependencies.jar \
