@@ -1,10 +1,8 @@
 package org.codeforamerica.pdfparser;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 
+import org.codeforamerica.pdfparser.concat.FileConcatenator;
 import org.codeforamerica.pdfparser.converters.JsonToPdfConverter;
 import org.codeforamerica.pdfparser.converters.PdfToJsonConverter;
 import org.codeforamerica.pdfparser.loaders.LocalPdfReader;
@@ -13,8 +11,6 @@ import org.codeforamerica.pdfparser.loaders.LocalPdfWriter;
 import java.io.IOException;
 
 import com.lowagie.text.DocumentException;
-import com.lowagie.text.pdf.PdfReader;
-import com.lowagie.text.pdf.PdfCopyForms;
 
 /**
  *
@@ -82,32 +78,19 @@ public class PdfParser {
 		return converter.convert();
 	}
 
-	private static void writeJsonToPdf(String src, String dest, String json, String fontPath) {
+	static void writeJsonToPdf(String src, String dest, String json, String fontPath) {
 		JsonToPdfConverter pdfWriter = new JsonToPdfConverter(new LocalPdfWriter(src, dest), json, fontPath);
 		pdfWriter.convert();
 	}
 
-	private static void concatFiles(String[] argv) throws FileNotFoundException {
+	static void concatFiles(String[] argv) throws FileNotFoundException {
 		String[] srcFiles = new String[argv.length - 2];
 		int numArgs = argv.length;
 		for (int i = 1; i < numArgs - 1; i++) {
 			srcFiles[i - 1] = argv[i];
 		}
-        OutputStream outputStream = new FileOutputStream(argv[numArgs - 1]);
-        PdfCopyForms copy;
-		try {
-			copy = new PdfCopyForms(outputStream);
 
-	        for (String srcFile : srcFiles) {
-	        	File inFile = new File(srcFile);
-	            PdfReader reader;
-				reader = new PdfReader(inFile.getAbsolutePath());
-				copy.addDocument(reader);
-	            reader.close();
-	        }
-            copy.close();
-		} catch (IOException | DocumentException e) {
-			e.printStackTrace();
-		}
+		FileConcatenator concat = new FileConcatenator(srcFiles, argv[numArgs - 1] /* output path */);
+		concat.concatenateAndWrite();
 	}
 }

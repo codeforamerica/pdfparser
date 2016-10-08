@@ -18,6 +18,7 @@
 		<openpdf.version>1.0</openpdf.version>
 		<bouncycastle.version>1.54</bouncycastle.version>
 		<junit.version>4.12</junit.version>
+		<junit-addons.version>1.4</junit-addons.version>
 	</properties>
 	<scm>
 		<connection>scm:git:git@github.com:codeforamerica/pdfhook.git</connection>
@@ -57,6 +58,12 @@
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/junit-addons/junit-addons -->
+		<dependency>
+			<groupId>junit-addons</groupId>
+			<artifactId>junit-addons</artifactId>
+			<version>${junit-addons.version}</version>
 		</dependency>
 
 	</dependencies>
