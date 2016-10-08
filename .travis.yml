@@ -2,8 +2,9 @@ language: java
 jdk:
   - oraclejdk8
 before_install:
-  - wget http://sourceforge.net/projects/dejavu/files/dejavu/2.37/dejavu-fonts-ttf-2.37.tar.bz2
-  - tar dejavu-fonts-ttf-2.37.tar.bz2
+  - wget "http://sourceforge.net/projects/dejavu/files/dejavu/2.37/dejavu-fonts-ttf-2.37.tar.bz2"
   - ls -la
-  - ls dejavu-fonts-ttf-2.37
+  - tar "dejavu-fonts-ttf-2.37.tar.bz2"
+  - ls -la
+  - ls "dejavu-fonts-ttf-2.37"
 script: make test
