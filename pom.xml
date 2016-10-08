@@ -100,7 +100,7 @@
 					<archive>
 						<manifest>
 							<!-- The main class that will be run if you use "java -jar ..." -->
-							<mainClass>PdfParser</mainClass>
+							<mainClass>org.codeforamerica.pdfparser.PdfParser</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
