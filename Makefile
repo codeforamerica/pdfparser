@@ -36,7 +36,7 @@ combine_pdfs:
         output.pdf
 
 test:
-	make default
+	mvn clean package
 	make field_data
 	make fill_fields
 	make arabic_test

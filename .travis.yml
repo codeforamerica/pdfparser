@@ -1,3 +1,2 @@
 language: java
-before_install: mvn clean package
 script: make test
