@@ -9,6 +9,7 @@ import org.codeforamerica.pdfparser.loaders.LocalPdfReader;
 import org.codeforamerica.pdfparser.loaders.LocalPdfWriter;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 import com.lowagie.text.DocumentException;
 
@@ -47,7 +48,13 @@ public class PdfParser {
     		if (args.length > 4) {
     			fontPath = args[5];
     		}
-    		writeJsonToPdf(args[1], args[2], args[3], fontPath);
+    		String json = args[3];
+    		if (args[3].equals("-"))
+    		{
+    			Scanner in = new Scanner(System.in);
+    			json = in.useDelimiter("\\A").next();
+    		}
+    		writeJsonToPdf(args[1], args[2], json, fontPath);
     	} else if (args.length > 3 && args[0].equals("concat_files")) {
     		concatFiles(args);
     	} else {
