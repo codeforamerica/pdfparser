@@ -14,6 +14,34 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FileConcatenatorTest {
+    @Test
+    public void testConcatFilesWithOneFileMakesCopy() throws FileNotFoundException, IOException {
+        String[] srcFiles = new String[]{"src/test/resources/testpdfs/text.pdf"};
+        String outputPath = "output.pdf";
+
+        FileConcatenator concat = new FileConcatenator(srcFiles, outputPath);
+        concat.concatenateAndWrite();
+
+        assertPdfFormsEqual(srcFiles[0], outputPath);
+    }
+
+    @Test
+    public void testConcatFilesWithMultipleFilesKeepsAllFields() throws FileNotFoundException, IOException {
+        String[] srcFiles = new String[]{
+                "src/test/resources/testpdfs/text.pdf",
+                "src/test/resources/testpdfs/checkbox.pdf"
+        };
+        String outputPath = "output.pdf";
+
+        FileConcatenator concat = new FileConcatenator(srcFiles, outputPath);
+        concat.concatenateAndWrite();
+
+        HashMap<String, String> textFields = readPdf(srcFiles[0]);
+        HashMap<String, String> checkboxFields = readPdf(srcFiles[1]);
+        HashMap<String, String> outputFields = readPdf(outputPath);
+        assertFirstMapContainsSecond(outputFields, textFields);
+        assertFirstMapContainsSecond(outputFields, checkboxFields);
+    }
 
     public File getResourceFile(String relativeFilePath){
         ClassLoader classLoader = getClass().getClassLoader();
@@ -26,10 +54,12 @@ public class FileConcatenatorTest {
         PdfReader reader = new PdfReader(pdfPath);
         AcroFields fields = reader.getAcroFields();
         Map<String, AcroFields.Item> fieldMap = fields.getFields();
+
         for (Map.Entry<String, AcroFields.Item> entry : fieldMap.entrySet()) {
             String fieldValue = fields.getField(entry.getKey());
             keyValueMap.put(entry.getKey(), fieldValue);
         };
+
         return keyValueMap;
     }
 
@@ -48,28 +78,4 @@ public class FileConcatenatorTest {
         assertFirstMapContainsSecond(fieldsA, fieldsB);
     }
 
-    @Test
-    public void testConcatFilesWithOneFileMakesCopy() throws FileNotFoundException, IOException {
-        String[] srcFiles = new String[]{"src/test/resources/testpdfs/text.pdf"};
-        String outputPath = "output.pdf";
-        FileConcatenator concat = new FileConcatenator(srcFiles, outputPath);
-        concat.concatenateAndWrite();
-        assertPdfFormsEqual(srcFiles[0], outputPath);
-    }
-
-    @Test
-    public void testConcatFilesWithMultipleFilesKeepsAllFields() throws FileNotFoundException, IOException {
-        String[] srcFiles = new String[]{
-                "src/test/resources/testpdfs/text.pdf",
-                "src/test/resources/testpdfs/checkbox.pdf"
-        };
-        String outputPath = "output.pdf";
-        FileConcatenator concat = new FileConcatenator(srcFiles, outputPath);
-        concat.concatenateAndWrite();
-        HashMap<String, String> textFields = readPdf(srcFiles[0]);
-        HashMap<String, String> checkboxFields = readPdf(srcFiles[1]);
-        HashMap<String, String> outputFields = readPdf(outputPath);
-        assertFirstMapContainsSecond(outputFields, textFields);
-        assertFirstMapContainsSecond(outputFields, checkboxFields);
-    }
 }

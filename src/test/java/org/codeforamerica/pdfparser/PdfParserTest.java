@@ -1,56 +1,12 @@
-/**
- * 
- */
 package org.codeforamerica.pdfparser;
-
-import static org.junit.Assert.*;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-/**
- * @author brianhenry
- *
- */
 public class PdfParserTest {
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-	}
-
 	public JsonNode stringToJson(String rawJson) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.readTree(rawJson);
@@ -58,7 +14,6 @@ public class PdfParserTest {
 
 	@Test
 	public void testReadPdfFields() throws IOException {
-
 		String sampleFormFilled = "testpdfs/sample_form-filled.pdf";
 
 		String parsedFile = PdfParser.readPdfFields(sampleFormFilled);
@@ -67,7 +22,5 @@ public class PdfParserTest {
 		JsonNode expectedJson = stringToJson(expected);
 		JsonNode resultingJson = stringToJson(parsedFile);
 		Assert.assertEquals(expectedJson, resultingJson);
-
 	}
-
 }
